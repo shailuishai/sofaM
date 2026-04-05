@@ -1,0 +1,26 @@
+# Зависимости и сборка фронтенда
+node_modules
+dist
+dist-ssr
+*.local
+
+# Логи
+logs
+*.log
+npm-debug.log*
+
+# Настройки редакторов и ОС
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+
+# Переменные окружения
+.env
+.env.*
+
+# Python / Серверная часть
+server/venv/
+server/env/
+server/__pycache__/
+*.pyc
