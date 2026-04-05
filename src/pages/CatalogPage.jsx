@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../components/ui/Button';
 import FadeInUp from '../components/ui/FadeInUp';
@@ -50,14 +51,16 @@ const productsData = [
 const categories = ['Все', 'Диваны', 'Кровати', 'Кресла'];
 
 export default function CatalogPage() {
-    const [activeTab, setActiveTab] = useState('Все');
+    const location = useLocation();
+
+    // Инициализируем табы с учетом данных из роутера (по умолчанию 'Все')
+    const [activeTab, setActiveTab] = useState(location.state?.category || 'Все');
     const [selectedProduct, setSelectedProduct] = useState(null);
 
-    // Стейты для отслеживания свайпов
+    // Стейт для отслеживания свайпов
     const [touchStartX, setTouchStartX] = useState(null);
-    const [touchStartY, setTouchStartY] = useState(null);
 
-    // Блокировка скролла фона
+    // ЭФФЕКТ 1: Блокировка скролла при открытой модалке
     useEffect(() => {
         if (selectedProduct) {
             document.body.style.overflow = 'hidden';
@@ -66,22 +69,29 @@ export default function CatalogPage() {
         }
     }, [selectedProduct]);
 
+    // ЭФФЕКТ 2: Обновление категории, если перешли по ссылке на ту же страницу
+    useEffect(() => {
+        if (location.state?.category) {
+            setActiveTab(location.state.category);
+        }
+    }, [location.state]);
+
     // Логика свайпа вкладок (Влево / Вправо)
     const handleTouchStart = (e) => setTouchStartX(e.targetTouches[0].clientX);
     const handleTouchEnd = (e) => {
         if (!touchStartX) return;
         const touchEndX = e.changedTouches[0].clientX;
         const distance = touchStartX - touchEndX;
-        const isLeftSwipe = distance > 50; // Свайп влево
-        const isRightSwipe = distance < -50; // Свайп вправо
+        const isLeftSwipe = distance > 50;
+        const isRightSwipe = distance < -50;
 
         const currentIndex = categories.indexOf(activeTab);
 
         if (isLeftSwipe && currentIndex < categories.length - 1) {
-            setActiveTab(categories[currentIndex + 1]); // Следующая вкладка
+            setActiveTab(categories[currentIndex + 1]);
         }
         if (isRightSwipe && currentIndex > 0) {
-            setActiveTab(categories[currentIndex - 1]); // Предыдущая вкладка
+            setActiveTab(categories[currentIndex - 1]);
         }
         setTouchStartX(null);
     };
@@ -91,13 +101,11 @@ export default function CatalogPage() {
         : productsData.filter(item => item.category === activeTab);
 
     return (
-        // Вешаем слушатели свайпов на весь контейнер каталога
         <section
             className="w-full min-h-screen bg-primary pt-32 pb-16 md:px-[120px] px-4 relative overflow-hidden"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
         >
-
             <FadeInUp>
                 <div className="flex flex-col items-center mb-16 relative z-10">
                     <h1 className="font-serif text-[40px] md:text-[56px] text-graphite mb-8">Каталог</h1>
@@ -126,7 +134,6 @@ export default function CatalogPage() {
 
             {/* СЕТКА ТОВАРОВ */}
             <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                {/* mode="popLayout" - КЛЮЧ к плавной анимации сетки. Элементы не толкают друг друга при исчезновении */}
                 <AnimatePresence mode="popLayout">
                     {filteredProducts.map((product) => (
                         <motion.div
@@ -154,7 +161,7 @@ export default function CatalogPage() {
                 </AnimatePresence>
             </motion.div>
 
-            {/* БРОНЕБОЙНОЕ МОДАЛЬНОЕ ОКНО ТОВАРА */}
+            {/* МОДАЛЬНОЕ ОКНО ТОВАРА */}
             <AnimatePresence>
                 {selectedProduct && (
                     <>
@@ -181,10 +188,8 @@ export default function CatalogPage() {
                                     setSelectedProduct(null);
                                 }
                             }}
-                            // Строгое ограничение высоты и скрытие всего, что выходит за рамки
                             className="fixed bottom-0 left-0 w-full h-[85vh] md:h-[75vh] bg-primary z-50 shadow-2xl flex flex-col md:flex-row overflow-hidden"
                         >
-                            {/* Элементы управления (всегда поверх всего) */}
                             <div className="md:hidden absolute top-3 left-1/2 -translate-x-1/2 w-12 h-[2px] bg-white/80 z-50 mix-blend-difference cursor-grab active:cursor-grabbing"></div>
 
                             <button
@@ -194,23 +199,16 @@ export default function CatalogPage() {
                                 Закрыть [X]
                             </button>
 
-                            {/* 1. БЛОК КАРТИНКИ (Защита от любых пропорций) */}
-                            {/* На мобилке фиксированная высота 40vh, на ПК ровно 50% ширины */}
                             <div className="relative w-full h-[40vh] md:h-full md:w-1/2 shrink-0 bg-gray-200">
                                 <img
                                     src={selectedProduct.image}
                                     alt={selectedProduct.name}
-                                    // absolute inset-0 гарантирует, что картинка не сломает родительский flex
                                     className="absolute inset-0 w-full h-full object-cover"
                                 />
                                 <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/40 to-transparent pointer-events-none md:hidden z-10"></div>
                             </div>
 
-                            {/* 2. БЛОК КОНТЕНТА И КНОПКИ (Правая сторона) */}
-                            {/* min-h-0 - магия Flexbox, не дающая контейнеру расти от контента */}
                             <div className="flex-1 w-full md:w-1/2 flex flex-col min-h-0 bg-primary relative">
-
-                                {/* 2.1 Скроллируемая область с текстом */}
                                 <div className="flex-1 overflow-y-auto p-6 md:px-16 md:pt-16 md:pb-8">
                                     <span className="font-sans text-[12px] uppercase tracking-widest text-graphite/50 mb-4 block break-words">
                                         Категория: {selectedProduct.category}
@@ -240,14 +238,11 @@ export default function CatalogPage() {
                                     </div>
                                 </div>
 
-                                {/* 2.2 Приклеенный (Sticky) подвал с кнопкой */}
-                                {/* shrink-0 гарантирует, что эта зона никогда не сожмется и не исчезнет */}
                                 <div className="shrink-0 border-t border-gray-200 bg-primary p-6 md:px-16 md:py-8 z-10">
                                     <Button variant="primary" className="w-full">
                                         Рассчитать стоимость
                                     </Button>
                                 </div>
-
                             </div>
                         </motion.div>
                     </>

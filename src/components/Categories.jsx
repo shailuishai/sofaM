@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import FadeInUp from './ui/FadeInUp';
+
 const categories = [
     {
         id: 1,
@@ -28,20 +30,24 @@ export default function Categories() {
                     <h2 className="font-serif text-[28px] md:text-[48px] leading-[120%] text-graphite">
                         Каталог
                     </h2>
-                    <a href="#" className="hidden md:inline-block font-sans text-[14px] uppercase tracking-widest text-graphite border-b border-graphite pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors">
+                    {/* Передаем 'Все', чтобы сбросить фильтры */}
+                    <Link
+                        to="/catalog"
+                        state={{ category: 'Все' }}
+                        className="hidden md:inline-block font-sans text-[14px] uppercase tracking-widest text-graphite border-b border-graphite pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors"
+                    >
                         Все модели
-                    </a>
+                    </Link>
                 </div>
             </FadeInUp>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
                 {categories.map((category, index) => (
-                    // Оборачиваем каждую карточку.
-                    // delay = индекс * 0.2 (0 сек, 0.2 сек, 0.4 сек)
-                    // Важно: key переносим на верхний элемент (FadeInUp)
                     <FadeInUp key={category.id} delay={index * 0.2}>
-                        <a
-                            href="#"
+                        {/* Передаем конкретный title категории в state */}
+                        <Link
+                            to="/catalog"
+                            state={{ category: category.title }}
                             className="group relative block w-full h-[400px] md:h-[560px] overflow-hidden"
                         >
                             <img
@@ -55,7 +61,7 @@ export default function Categories() {
                                     {category.title}
                                 </h3>
                             </div>
-                        </a>
+                        </Link>
                     </FadeInUp>
                 ))}
             </div>

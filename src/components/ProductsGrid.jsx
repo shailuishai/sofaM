@@ -2,6 +2,7 @@ import React from 'react';
 // Убедись в правильности пути к кнопке
 import Button from './ui/Button';
 import FadeInUp from './ui/FadeInUp';
+import {Link} from "react-router-dom";
 // Временные данные для карточек (обычно они приходят с бэкенда)
 const products = [
     {
@@ -67,9 +68,20 @@ export default function ProductsGrid() {
                                 <p className="font-sans text-[14px] text-graphite/70 font-light leading-relaxed mb-6 flex-grow">
                                     {product.description}
                                 </p>
-                                <button className="w-max text-[13px] font-sans font-medium uppercase tracking-widest text-graphite border-b border-graphite pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors">
+                                <Link
+                                    to="/about#contacts"
+                                    onClick={(e) => {
+                                        // Если мы уже на странице /about, отменяем переход и просто скроллим
+                                        if (window.location.pathname === '/about') {
+                                            e.preventDefault();
+                                            document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' });
+                                        }
+                                    }}
+                                    className="w-max text-[13px] font-sans font-medium uppercase tracking-widest text-graphite border-b border-graphite pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors"
+                                >
                                     Узнать стоимость
-                                </button>
+                                    <span className="absolute bottom-0 left-0 w-full h-[1px] bg-graphite origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100"></span>
+                                </Link>
                             </div>
                         </div>
                     </FadeInUp>

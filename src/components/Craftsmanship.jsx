@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from './ui/Button';
-import FadeInUp from './ui/FadeInUp'; // Проверь путь
+import FadeInUp from './ui/FadeInUp';
+import {Link} from "react-router-dom"; // Проверь путь
 
 export default function Craftsmanship() {
     return (
@@ -42,7 +43,17 @@ export default function Craftsmanship() {
                     </FadeInUp>
 
                     <FadeInUp delay={0.5}>
-                        <Button variant="secondary">
+                        <Button
+                            variant="secondary"
+                            to="/about#contacts"
+                            onClick={(e) => {
+                                // Если мы уже на странице /about, отменяем переход и просто скроллим
+                                if (window.location.pathname === '/about') {
+                                    e.preventDefault();
+                                    document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' });
+                                }
+                            }}
+                        >
                             Узнать больше
                         </Button>
                     </FadeInUp>
