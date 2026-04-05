@@ -30,8 +30,18 @@ const Hero = () => {
                 </p>
 
                 {/* Используем нашу готовую кнопку */}
-                <Button variant="primary">
-                    Узнать стоимость
+                <Button
+                    variant="primary"
+                    to="/about#contacts"
+                    onClick={(e) => {
+                        // Если мы уже на странице /about, отменяем переход и просто скроллим
+                        if (window.location.pathname === '/about') {
+                            e.preventDefault();
+                            document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }}
+                >
+                    Узнать больше
                 </Button>
 
             </div>
