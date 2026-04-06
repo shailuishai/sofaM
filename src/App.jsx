@@ -8,6 +8,7 @@ import CatalogPage from "./pages/CatalogPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import {HelmetProvider} from "react-helmet-async";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function App() {
     return (
@@ -24,6 +25,7 @@ export default function App() {
                         </Routes>
                     </div>
                     <Footer />
+                    <SpeedInsights/>
                 </div>
             </BrowserRouter>
         </HelmetProvider>

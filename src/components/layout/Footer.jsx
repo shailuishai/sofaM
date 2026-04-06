@@ -55,7 +55,7 @@ const Footer = () => {
                         <div className="flex flex-col gap-4 font-montserrat text-sm">
                             <a href="tel:+80293302000" className="hover:text-gray-300 transition-colors duration-300">8029 330-20-00</a>
                             <a href="mailto:hello@brand.com" className="hover:text-gray-300 transition-colors duration-300">hello@brand.com</a>
-                            <p className="text-gray-400 mt-2">Москва, ул. Архитектурная, 1</p>
+                            <p className="text-gray-400 mt-2">Минск, ул. Архитектурная, 1</p>
                         </div>
                     </div>
                 </FadeInUp>
