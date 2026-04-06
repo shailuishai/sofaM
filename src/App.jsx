@@ -8,8 +8,8 @@ import CatalogPage from "./pages/CatalogPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import {HelmetProvider} from "react-helmet-async";
-import {SpeedInsights} from "@vercel/speed-insights/vue";
-import {Analytics} from "@vercel/analytics/vue";
+import {SpeedInsights} from "@vercel/speed-insights/react";
+import {Analytics} from "@vercel/analytics/react";
 
 export default function App() {
     return (
