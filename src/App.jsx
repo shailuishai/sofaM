@@ -7,22 +7,25 @@ import Home from "./pages/Home.jsx";
 import CatalogPage from "./pages/CatalogPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import {HelmetProvider} from "react-helmet-async";
 
 export default function App() {
     return (
-        <BrowserRouter>
-            <ScrollToTop />
-            <div className="min-h-screen flex flex-col bg-primary">
-                <Header />
-                <div className="flex-grow">
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/catalog" element={<CatalogPage />} />
-                        <Route path="/about" element={<AboutPage />} />
-                    </Routes>
+        <HelmetProvider>
+            <BrowserRouter>
+                <ScrollToTop />
+                <div className="min-h-screen flex flex-col bg-primary">
+                    <Header />
+                    <div className="flex-grow">
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/catalog" element={<CatalogPage />} />
+                            <Route path="/about" element={<AboutPage />} />
+                        </Routes>
+                    </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
-        </BrowserRouter>
+            </BrowserRouter>
+        </HelmetProvider>
     );
 }

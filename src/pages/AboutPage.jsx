@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import FadeInUp from '../components/ui/FadeInUp';
+import SEO from "../components/SEO.jsx";
 
 export default function AboutPage() {
     const { hash } = useLocation();
@@ -22,7 +23,10 @@ export default function AboutPage() {
 
     return (
         <div className="w-full min-h-screen bg-primary pt-32 pb-16">
-
+            <SEO
+                title="О производстве | Sofa M"
+                description="Узнайте, как мы создаем архитектуру вашего личного пространства. Ручной труд мастеров, премиальные материалы и бескомпромиссное качество."
+            />
             {/* СКРОЛЛ 1: Философия и Фото */}
             <section className="px-4 md:px-[120px] mb-24 md:mb-40">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">

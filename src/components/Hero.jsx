@@ -19,10 +19,12 @@ const Hero = () => {
 
             {/* Контентная часть */}
             <div className="relative z-10 flex flex-col items-center text-center px-[16px] lg:px-[120px] w-full max-w-[1440px] mx-auto mt-16">
+                <h1 className="sr-only">Премиальная мягкая мебель на заказ</h1>
 
-                <h1 className="font-playfair text-[40px] md:text-[72px] leading-[110%] text-[#1A1A1A] mb-6 max-w-4xl">
+                {/* H2 для людей - красивый и визуально выглядит как главный */}
+                <h2 className="font-playfair text-[40px] md:text-[72px] leading-[110%] text-[#1A1A1A] mb-6 max-w-4xl">
                     Архитектура вашего комфорта
-                </h1>
+                </h2>
 
                 <p className="font-montserrat text-[16px] md:text-[18px] leading-[160%] text-[#1A1A1A]/80 mb-10 max-w-xl font-light">
                     Премиальная мебель собственного производства под заказ.
