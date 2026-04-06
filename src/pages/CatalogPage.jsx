@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../components/ui/Button';
 import FadeInUp from '../components/ui/FadeInUp';
+import SEO from "../components/SEO.jsx";
 
 // --- БАЗА ДАННЫХ ---
 const productsData = [
@@ -69,12 +70,12 @@ export default function CatalogPage() {
         }
     }, [selectedProduct]);
 
-    // ЭФФЕКТ 2: Обновление категории, если перешли по ссылке на ту же страницу
     useEffect(() => {
-        if (location.state?.category) {
-            setActiveTab(location.state.category);
+        const incomingCategory = location.state?.category;
+        if (incomingCategory && incomingCategory !== activeTab) {
+            setActiveTab(incomingCategory);
         }
-    }, [location.state]);
+    }, [location.state?.category]);
 
     // Логика свайпа вкладок (Влево / Вправо)
     const handleTouchStart = (e) => setTouchStartX(e.targetTouches[0].clientX);
@@ -106,6 +107,10 @@ export default function CatalogPage() {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
         >
+            <SEO
+                title="Каталог диванов и кресел"
+                description="Выбирайте эксклюзивные модели мебели Sofa M. Итальянские ткани и массив дуба."
+            />
             <FadeInUp>
                 <div className="flex flex-col items-center mb-16 relative z-10">
                     <h1 className="font-serif text-[40px] md:text-[56px] text-graphite mb-8">Каталог</h1>
