@@ -14,7 +14,7 @@ export default function Home() {
                 description="Ищете где купить мебель в Минске? Sofa M — производство эксклюзивных диванов, кресел и кроватей по индивидуальным размерам. Премиум качество и гарантия."
             />
             <Hero />
-            <Categories />
+            { /* <Categories /> */}
             <Craftsmanship />
             <ProductsGrid />
         </main>

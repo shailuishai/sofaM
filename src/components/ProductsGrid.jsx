@@ -1,9 +1,8 @@
 import React from 'react';
-// Убедись в правильности пути к кнопке
-import Button from './ui/Button';
+import { Link } from 'react-router-dom';
 import FadeInUp from './ui/FadeInUp';
-import {Link} from "react-router-dom";
-// Временные данные для карточек (обычно они приходят с бэкенда)
+
+// Временные данные для карточек (заглушки)
 const products = [
     {
         id: 1,
@@ -33,7 +32,7 @@ const products = [
 
 export default function ProductsGrid() {
     return (
-        <section className="w-full px-4 md:px-[120px] py-16 md:py-[120px] bg-primary">
+        <section className="w-full px-4 md:px-[120px] py-16 md:py-[120px] bg-primary overflow-hidden">
 
             <FadeInUp>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 gap-6">
@@ -48,11 +47,12 @@ export default function ProductsGrid() {
                 </div>
             </FadeInUp>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {/* ИЗМЕНЕНИЯ ЗДЕСЬ: Flex со скроллом для мобилки, Grid для десктопа */}
+            <div className="flex md:grid overflow-x-auto md:overflow-visible hide-scrollbar snap-x snap-mandatory md:snap-none grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 -mx-4 px-4 md:mx-0 md:px-0 pb-4 md:pb-0">
                 {products.map((product, index) => (
-                    // Каждая карточка получает свою задержку
                     <FadeInUp key={product.id} delay={index * 0.15}>
-                        <div className="group flex flex-col h-full cursor-pointer">
+                        {/* ИЗМЕНЕНИЯ ЗДЕСЬ: Фиксируем ширину карточки на мобилке (85% экрана) */}
+                        <div className="group flex flex-col h-full cursor-pointer min-w-[85vw] sm:min-w-[45vw] md:min-w-0 snap-center shrink-0">
                             <div className="relative w-full aspect-[4/5] overflow-hidden mb-6 bg-gray-100">
                                 <img
                                     src={product.image}
@@ -71,15 +71,15 @@ export default function ProductsGrid() {
                                 <Link
                                     to="/about#contacts"
                                     onClick={(e) => {
-                                        // Если мы уже на странице /about, отменяем переход и просто скроллим
                                         if (window.location.pathname === '/about') {
                                             e.preventDefault();
                                             document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' });
                                         }
                                     }}
-                                    className="w-max text-[13px] font-sans font-medium uppercase tracking-widest text-graphite border-b border-graphite pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors"
+                                    className="relative w-max text-[13px] font-sans font-medium uppercase tracking-widest text-graphite border-b border-graphite pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors"
                                 >
                                     Узнать стоимость
+                                    {/* Линия при наведении (сохранил твою структуру) */}
                                     <span className="absolute bottom-0 left-0 w-full h-[1px] bg-graphite origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100"></span>
                                 </Link>
                             </div>
