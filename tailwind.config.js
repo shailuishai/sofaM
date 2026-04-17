@@ -12,7 +12,8 @@ export default {
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'], // Основной шрифт (Body)
-        serif: ['"Playfair Display"', 'serif'], // Акцентный шрифт (Заголовки)
+        // ИЗМЕНЕНО: Новый "Кэжуал" шрифт без засечек для заголовков
+        serif: ['Unbounded', 'sans-serif'],
       },
     },
   },
