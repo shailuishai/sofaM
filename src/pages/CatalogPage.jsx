@@ -5,6 +5,13 @@ import Button from '../components/ui/Button';
 import FadeInUp from '../components/ui/FadeInUp';
 import SEO from "../components/SEO.jsx";
 
+// ИМПОРТ КАРТИНОК ИЗ ПАПКИ ASSETS
+import img1 from '../assets/1.png';
+import img2 from '../assets/2.png';
+import img3 from '../assets/3.png';
+import img4 from '../assets/4.png';
+import img5 from '../assets/5.png';
+
 // --- БАЗА ДАННЫХ (Заглушки) ---
 const productsData = [
     {
@@ -12,50 +19,58 @@ const productsData = [
         category: 'Диваны',
         name: 'Диван «Lumina»',
         shortDesc: 'Модульный диван из итальянского букле',
-        fullDesc: 'Lumina воплощает архитектурный минимализм. Глубокая посадка и модульная система позволяют адаптировать диван под любой интерьер.',
+        fullDesc: 'Lumina воплощает архитектурный минимализм. Глубокая посадка и модульная система позволяют адаптировать диван под любой интерьер, создавая зону абсолютного комфорта.',
         materials: 'Массив ясеня, пенополиуретан Memory Foam, ткань Boucle.',
         dimensions: 'Ширина: 280 см | Глубина: 105 см | Высота: 75 см',
-        image: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=1000&auto=format&fit=crop',
+        image: img1,
     },
     {
         id: 2,
-        category: 'Кресла',
-        name: 'Кресло «Aura»',
-        shortDesc: 'Эргономичное кресло с каркасом из массива',
-        fullDesc: 'Кресло Aura — это союз строгих линий и выверенной эргономики. Наклон спинки рассчитан анатомически.',
-        materials: 'Массив дуба (тонировка под графит), натуральная кожа.',
-        dimensions: 'Ширина: 75 см | Глубина: 85 см | Высота: 80 см',
-        image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=1000&auto=format&fit=crop',
+        category: 'Диваны',
+        name: 'Диван «Horizon»',
+        shortDesc: 'Прямой диван с глубокой посадкой',
+        fullDesc: 'Идеальный баланс строгих линий и невероятной мягкости. Horizon создан для долгих вечеров в кругу семьи. Цельная подушка сиденья обеспечивает равномерную поддержку.',
+        materials: 'Массив сосны, высокоэластичный ППУ, износостойкий велюр.',
+        dimensions: 'Ширина: 240 см | Глубина: 110 см | Высота: 80 см',
+        image: img2,
     },
     {
         id: 3,
-        category: 'Кровати',
-        name: 'Кровать «Eclipse»',
-        shortDesc: 'Кровать с парящим эффектом',
-        fullDesc: 'Скрытое основание создает иллюзию левитации. Мягкое, объемное изголовье выполняет роль акустической панели.',
-        materials: 'Металлический каркас, велюр премиум-класса.',
-        dimensions: 'Для матраса: 180x200 см | Габариты: 200x220 см',
-        image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000&auto=format&fit=crop',
+        category: 'Диваны',
+        name: 'Диван «Eclipse»',
+        shortDesc: 'Угловая модель для просторных гостиных',
+        fullDesc: 'Создан для больших открытых пространств. Низкий профиль не перекрывает вид из панорамных окон, а широкая оттоманка позволяет отдыхать полулежа.',
+        materials: 'Березовая фанера, независимый пружинный блок, шенилл.',
+        dimensions: 'Ширина: 320 см | Глубина оттоманки: 160 см',
+        image: img3,
     },
     {
         id: 4,
         category: 'Диваны',
-        name: 'Диван «Horizon»',
-        shortDesc: 'Угловой диван с низким профилем',
-        fullDesc: 'Создан для больших открытых пространств. Низкий профиль не перекрывает вид из панорамных окон.',
-        materials: 'Массив сосны, износостойкий шенилл.',
-        dimensions: 'Ширина: 320 см | Глубина оттоманки: 160 см',
-        image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=1000&auto=format&fit=crop',
+        name: 'Диван «Aura»',
+        shortDesc: 'Лаконичный диван на скрытом каркасе',
+        fullDesc: 'Благодаря скрытым опорам создается иллюзия левитации. Тонкие подлокотники экономят пространство, оставляя максимум места для сидения.',
+        materials: 'Массив дуба, натуральный пух/перо, премиальная рогожка.',
+        dimensions: 'Ширина: 220 см | Глубина: 95 см | Высота: 85 см',
+        image: img4,
+    },
+    {
+        id: 5,
+        category: 'Диваны',
+        name: 'Диван «Nova»',
+        shortDesc: 'Минималистичный дизайн из шенилла',
+        fullDesc: 'Nova — это чистота формы. Отсутствие лишних деталей делает эту модель универсальной для современных интерьеров от лофта до сканди.',
+        materials: 'Металлический каркас, пенополиуретан HR, ткань Шенилл.',
+        dimensions: 'Ширина: 260 см | Глубина: 100 см | Высота: 78 см',
+        image: img5,
     }
 ];
 
-// ПРАВКА: Оставили только одну категорию
 const categories = ['Диваны'];
 
 export default function CatalogPage() {
     const location = useLocation();
 
-    // ПРАВКА: По умолчанию ставим "Диваны"
     const [activeTab, setActiveTab] = useState(location.state?.category || 'Диваны');
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [touchStartX, setTouchStartX] = useState(null);

@@ -2,31 +2,45 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FadeInUp from './ui/FadeInUp';
 
-// Временные данные для карточек (заглушки)
+// ИМПОРТ КАРТИНОК ИЗ ПАПКИ ASSETS
+// Убедись, что путь '../assets/1.png' правильный относительно этого файла
+import img1 from '../assets/1.png';
+import img2 from '../assets/2.png';
+import img3 from '../assets/3.png';
+import img4 from '../assets/4.png';
+import img5 from '../assets/5.png';
+
+// Обновленные данные (только диваны)
 const products = [
     {
         id: 1,
         name: 'Диван «Lumina»',
         description: 'Модульный диван с обивкой из итальянского букле',
-        image: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=1000&auto=format&fit=crop',
+        image: img1,
     },
     {
         id: 2,
-        name: 'Кресло «Aura»',
-        description: 'Эргономичное кресло с каркасом из массива дуба',
-        image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=1000&auto=format&fit=crop',
+        name: 'Диван «Horizon»',
+        description: 'Прямой диван с глубокой эргономичной посадкой',
+        image: img2,
     },
     {
         id: 3,
-        name: 'Кровать «Eclipse»',
-        description: 'Двуспальная кровать с мягким изголовьем',
-        image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000&auto=format&fit=crop',
+        name: 'Диван «Eclipse»',
+        description: 'Угловая модель для просторных гостиных зон',
+        image: img3,
     },
     {
         id: 4,
-        name: 'Пуф «Nova»',
-        description: 'Минималистичный пуф из натуральной кожи',
-        image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1000&auto=format&fit=crop',
+        name: 'Диван «Aura»',
+        description: 'Лаконичный диван на скрытом парящем каркасе',
+        image: img4,
+    },
+    {
+        id: 5,
+        name: 'Диван «Nova»',
+        description: 'Минималистичный дизайн из премиального шенилла',
+        image: img5,
     }
 ];
 
@@ -47,11 +61,9 @@ export default function ProductsGrid() {
                 </div>
             </FadeInUp>
 
-            {/* ИЗМЕНЕНИЯ ЗДЕСЬ: Flex со скроллом для мобилки, Grid для десктопа */}
             <div className="flex md:grid overflow-x-auto md:overflow-visible hide-scrollbar snap-x snap-mandatory md:snap-none grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 -mx-4 px-4 md:mx-0 md:px-0 pb-4 md:pb-0">
                 {products.map((product, index) => (
                     <FadeInUp key={product.id} delay={index * 0.15}>
-                        {/* ИЗМЕНЕНИЯ ЗДЕСЬ: Фиксируем ширину карточки на мобилке (85% экрана) */}
                         <div className="group flex flex-col h-full cursor-pointer min-w-[85vw] sm:min-w-[45vw] md:min-w-0 snap-center shrink-0">
                             <div className="relative w-full aspect-[4/5] overflow-hidden mb-6 bg-gray-100">
                                 <img
@@ -79,7 +91,6 @@ export default function ProductsGrid() {
                                     className="relative w-max text-[13px] font-sans font-medium uppercase tracking-widest text-graphite border-b border-graphite pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors"
                                 >
                                     Узнать стоимость
-                                    {/* Линия при наведении (сохранил твою структуру) */}
                                     <span className="absolute bottom-0 left-0 w-full h-[1px] bg-graphite origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100"></span>
                                 </Link>
                             </div>
