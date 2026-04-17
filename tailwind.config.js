@@ -12,8 +12,7 @@ export default {
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'], // Основной шрифт (Body)
-        // ИЗМЕНЕНО: Новый "Кэжуал" шрифт без засечек для заголовков
-        serif: ['Unbounded', 'sans-serif'],
+        serif: ['Montserrat', 'sans-serif'], // ИЗМЕНЕНО: Акцентный шрифт теперь тоже Montserrat
       },
     },
   },
