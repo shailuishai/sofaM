@@ -5,7 +5,7 @@ import Button from '../components/ui/Button';
 import FadeInUp from '../components/ui/FadeInUp';
 import SEO from "../components/SEO.jsx";
 
-// --- БАЗА ДАННЫХ ---
+// --- БАЗА ДАННЫХ (Заглушки) ---
 const productsData = [
     {
         id: 1,
@@ -49,19 +49,17 @@ const productsData = [
     }
 ];
 
-const categories = ['Все', 'Диваны', 'Кровати', 'Кресла'];
+// ПРАВКА: Оставили только одну категорию
+const categories = ['Диваны'];
 
 export default function CatalogPage() {
     const location = useLocation();
 
-    // Инициализируем табы с учетом данных из роутера (по умолчанию 'Все')
-    const [activeTab, setActiveTab] = useState(location.state?.category || 'Все');
+    // ПРАВКА: По умолчанию ставим "Диваны"
+    const [activeTab, setActiveTab] = useState(location.state?.category || 'Диваны');
     const [selectedProduct, setSelectedProduct] = useState(null);
-
-    // Стейт для отслеживания свайпов
     const [touchStartX, setTouchStartX] = useState(null);
 
-    // ЭФФЕКТ 1: Блокировка скролла при открытой модалке
     useEffect(() => {
         if (selectedProduct) {
             document.body.style.overflow = 'hidden';
@@ -75,9 +73,9 @@ export default function CatalogPage() {
         if (incomingCategory && incomingCategory !== activeTab) {
             setActiveTab(incomingCategory);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.state?.category]);
 
-    // Логика свайпа вкладок (Влево / Вправо)
     const handleTouchStart = (e) => setTouchStartX(e.targetTouches[0].clientX);
     const handleTouchEnd = (e) => {
         if (!touchStartX) return;
@@ -108,7 +106,7 @@ export default function CatalogPage() {
             onTouchEnd={handleTouchEnd}
         >
             <SEO
-                title="Каталог диванов и кресел"
+                title="Каталог диванов | Sofa M"
                 description="Выбирайте эксклюзивные модели мебели Sofa M. Итальянские ткани и массив дуба."
             />
             <FadeInUp>
@@ -170,7 +168,6 @@ export default function CatalogPage() {
             <AnimatePresence>
                 {selectedProduct && (
                     <>
-                        {/* Backdrop */}
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -179,7 +176,6 @@ export default function CatalogPage() {
                             className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm cursor-pointer"
                         />
 
-                        {/* Контейнер модалки */}
                         <motion.div
                             initial={{ y: '100%' }}
                             animate={{ y: 0 }}
