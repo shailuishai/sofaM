@@ -60,7 +60,7 @@ export default function AboutPage() {
                 <div className="mt-12 md:mt-20 w-full h-[300px] md:h-[50vh] overflow-hidden">
                     <FadeInUp delay={0.4}>
                         <img
-                            src="https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=2000&auto=format&fit=crop"
+                            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2000&auto=format&fit=crop"
                             alt="Интерьер и мебель"
                             className="w-full h-full object-cover grayscale-[10%]"
                         />
