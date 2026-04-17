@@ -6,11 +6,11 @@ import FadeInUp from '../components/ui/FadeInUp';
 import SEO from "../components/SEO.jsx";
 
 // ИМПОРТ КАРТИНОК ИЗ ПАПКИ ASSETS
-import img1 from '../assets/1.png';
-import img2 from '../assets/2.png';
-import img3 from '../assets/3.png';
-import img4 from '../assets/4.png';
-import img5 from '../assets/5.png';
+import img1 from '../assets/1.jpg';
+import img2 from '../assets/2.jpg';
+import img3 from '../assets/3.jpg';
+import img4 from '../assets/4.jpg';
+import img5 from '../assets/5.jpg';
 
 // --- БАЗА ДАННЫХ (Заглушки) ---
 const productsData = [
