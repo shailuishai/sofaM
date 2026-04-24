@@ -5,14 +5,23 @@ import Button from '../components/ui/Button';
 import FadeInUp from '../components/ui/FadeInUp';
 import SEO from "../components/SEO.jsx";
 
-// ИМПОРТ КАРТИНОК ИЗ ПАПКИ ASSETS
+// ИМПОРТ ВСЕХ КАРТИНОК ИЗ ПАПКИ ASSETS
 import img1 from '../assets/1.jpg';
 import img2 from '../assets/2.jpg';
-import img3 from '../assets/3.jpg';
-import img4 from '../assets/4.jpg';
-import img5 from '../assets/5.jpg';
 
-// --- БАЗА ДАННЫХ (Заглушки) ---
+import img3 from '../assets/3.jpg';
+import img3_2 from '../assets/3_2.jpg';
+
+import img4 from '../assets/4.jpg';
+import img4_2 from '../assets/4_2.jpg';
+import img4_3 from '../assets/4_3.jpg';
+import img4_4 from '../assets/4_4.jpg';
+import img4_5 from '../assets/4_5.jpg';
+
+import img5 from '../assets/5.jpg';
+import img5_2 from '../assets/5_2.jpg';
+
+// --- БАЗА ДАННЫХ ---
 const productsData = [
     {
         id: 1,
@@ -22,7 +31,7 @@ const productsData = [
         fullDesc: 'Lumina воплощает архитектурный минимализм. Глубокая посадка и модульная система позволяют адаптировать диван под любой интерьер, создавая зону абсолютного комфорта.',
         materials: 'Массив ясеня, пенополиуретан Memory Foam, ткань Boucle.',
         dimensions: 'Ширина: 280 см | Глубина: 105 см | Высота: 75 см',
-        image: img1,
+        images: [img1],
     },
     {
         id: 2,
@@ -32,7 +41,7 @@ const productsData = [
         fullDesc: 'Идеальный баланс строгих линий и невероятной мягкости. Horizon создан для долгих вечеров в кругу семьи. Цельная подушка сиденья обеспечивает равномерную поддержку.',
         materials: 'Массив сосны, высокоэластичный ППУ, износостойкий велюр.',
         dimensions: 'Ширина: 240 см | Глубина: 110 см | Высота: 80 см',
-        image: img2,
+        images: [img2],
     },
     {
         id: 3,
@@ -42,7 +51,7 @@ const productsData = [
         fullDesc: 'Создан для больших открытых пространств. Низкий профиль не перекрывает вид из панорамных окон, а широкая оттоманка позволяет отдыхать полулежа.',
         materials: 'Березовая фанера, независимый пружинный блок, шенилл.',
         dimensions: 'Ширина: 320 см | Глубина оттоманки: 160 см',
-        image: img3,
+        images: [img3, img3_2], // 2 ракурса
     },
     {
         id: 4,
@@ -52,7 +61,7 @@ const productsData = [
         fullDesc: 'Благодаря скрытым опорам создается иллюзия левитации. Тонкие подлокотники экономят пространство, оставляя максимум места для сидения.',
         materials: 'Массив дуба, натуральный пух/перо, премиальная рогожка.',
         dimensions: 'Ширина: 220 см | Глубина: 95 см | Высота: 85 см',
-        image: img4,
+        images: [img4, img4_2, img4_3, img4_4, img4_5], // 5 ракурсов
     },
     {
         id: 5,
@@ -62,7 +71,7 @@ const productsData = [
         fullDesc: 'Nova — это чистота формы. Отсутствие лишних деталей делает эту модель универсальной для современных интерьеров от лофта до сканди.',
         materials: 'Металлический каркас, пенополиуретан HR, ткань Шенилл.',
         dimensions: 'Ширина: 260 см | Глубина: 100 см | Высота: 78 см',
-        image: img5,
+        images: [img5, img5_2], // 2 ракурса
     }
 ];
 
@@ -75,9 +84,13 @@ export default function CatalogPage() {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [touchStartX, setTouchStartX] = useState(null);
 
+    // Стейт для текущей картинки в галерее
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
     useEffect(() => {
         if (selectedProduct) {
             document.body.style.overflow = 'hidden';
+            setCurrentImageIndex(0);
         } else {
             document.body.style.overflow = 'unset';
         }
@@ -90,6 +103,20 @@ export default function CatalogPage() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.state?.category]);
+
+    const nextImage = (e) => {
+        e.stopPropagation();
+        setCurrentImageIndex((prev) =>
+            prev === selectedProduct.images.length - 1 ? 0 : prev + 1
+        );
+    };
+
+    const prevImage = (e) => {
+        e.stopPropagation();
+        setCurrentImageIndex((prev) =>
+            prev === 0 ? selectedProduct.images.length - 1 : prev - 1
+        );
+    };
 
     const handleTouchStart = (e) => setTouchStartX(e.targetTouches[0].clientX);
     const handleTouchEnd = (e) => {
@@ -166,7 +193,7 @@ export default function CatalogPage() {
                         >
                             <div className="relative w-full aspect-[4/5] overflow-hidden mb-6 bg-gray-100">
                                 <img
-                                    src={product.image}
+                                    src={product.images[0]}
                                     alt={product.name}
                                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                 />
@@ -179,7 +206,7 @@ export default function CatalogPage() {
                 </AnimatePresence>
             </motion.div>
 
-            {/* МОДАЛЬНОЕ ОКНО ТОВАРА */}
+            {/* МОДАЛЬНОЕ ОКНО ТОВАРА СО СЛАЙДЕРОМ */}
             <AnimatePresence>
                 {selectedProduct && (
                     <>
@@ -215,12 +242,52 @@ export default function CatalogPage() {
                                 Закрыть [X]
                             </button>
 
-                            <div className="relative w-full h-[40vh] md:h-full md:w-1/2 shrink-0 bg-gray-200">
-                                <img
-                                    src={selectedProduct.image}
-                                    alt={selectedProduct.name}
-                                    className="absolute inset-0 w-full h-full object-cover"
-                                />
+                            {/* БЛОК СЛАЙДЕРА */}
+                            <div className="relative w-full h-[40vh] md:h-full md:w-1/2 shrink-0 bg-gray-200 group">
+                                <AnimatePresence mode="wait">
+                                    <motion.img
+                                        key={currentImageIndex}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                        src={selectedProduct.images[currentImageIndex]}
+                                        alt={`${selectedProduct.name} - ракурс ${currentImageIndex + 1}`}
+                                        className="absolute inset-0 w-full h-full object-cover z-0"
+                                    />
+                                </AnimatePresence>
+
+                                {/* Управление слайдером (показываем, если картинок больше одной) */}
+                                {selectedProduct.images.length > 1 && (
+                                    <>
+                                        <button
+                                            onClick={prevImage}
+                                            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/50 hover:bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-graphite transition-all md:opacity-0 md:group-hover:opacity-100 z-20"
+                                        >
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 19l-7-7 7-7" /></svg>
+                                        </button>
+
+                                        <button
+                                            onClick={nextImage}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/50 hover:bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-graphite transition-all md:opacity-0 md:group-hover:opacity-100 z-20"
+                                        >
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 5l7 7-7 7" /></svg>
+                                        </button>
+
+                                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                                            {selectedProduct.images.map((_, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(idx); }}
+                                                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                                                        currentImageIndex === idx ? 'bg-white w-6' : 'bg-white/50 hover:bg-white/80'
+                                                    }`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+
                                 <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/40 to-transparent pointer-events-none md:hidden z-10"></div>
                             </div>
 

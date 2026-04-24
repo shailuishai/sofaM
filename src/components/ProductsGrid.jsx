@@ -2,45 +2,44 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FadeInUp from './ui/FadeInUp';
 
-// ИМПОРТ КАРТИНОК ИЗ ПАПКИ ASSETS
-// Убедись, что путь '../assets/1.png' правильный относительно этого файла
+// ИМПОРТ КАРТИНОК
 import img1 from '../assets/1.jpg';
 import img2 from '../assets/2.jpg';
 import img3 from '../assets/3.jpg';
 import img4 from '../assets/4.jpg';
 import img5 from '../assets/5.jpg';
 
-// Обновленные данные (только диваны)
+// Обновленные данные (с массивом images)
 const products = [
     {
         id: 1,
         name: 'Диван «Lumina»',
         description: 'Модульный диван с обивкой из итальянского букле',
-        image: img1,
+        images: [img1],
     },
     {
         id: 2,
         name: 'Диван «Horizon»',
         description: 'Прямой диван с глубокой эргономичной посадкой',
-        image: img2,
+        images: [img2],
     },
     {
         id: 3,
         name: 'Диван «Eclipse»',
         description: 'Угловая модель для просторных гостиных зон',
-        image: img3,
+        images: [img3],
     },
     {
         id: 4,
         name: 'Диван «Aura»',
         description: 'Лаконичный диван на скрытом парящем каркасе',
-        image: img4,
+        images: [img4],
     },
     {
         id: 5,
         name: 'Диван «Nova»',
         description: 'Минималистичный дизайн из премиального шенилла',
-        image: img5,
+        images: [img5],
     }
 ];
 
@@ -66,8 +65,9 @@ export default function ProductsGrid() {
                     <FadeInUp key={product.id} delay={index * 0.15}>
                         <div className="group flex flex-col h-full cursor-pointer min-w-[85vw] sm:min-w-[45vw] md:min-w-0 snap-center shrink-0">
                             <div className="relative w-full aspect-[4/5] overflow-hidden mb-6 bg-gray-100">
+                                {/* ИЗМЕНЕНО: Берем 0 индекс массива */}
                                 <img
-                                    src={product.image}
+                                    src={product.images[0]}
                                     alt={product.name}
                                     loading="lazy"
                                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
