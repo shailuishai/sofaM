@@ -34,12 +34,6 @@ const products = [
         name: 'Диван «Aura»',
         description: 'Лаконичный диван на скрытом парящем каркасе',
         images: [img4],
-    },
-    {
-        id: 5,
-        name: 'Диван «Nova»',
-        description: 'Минималистичный дизайн из премиального шенилла',
-        images: [img5],
     }
 ];
 
