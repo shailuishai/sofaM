@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../components/ui/Button';
@@ -51,7 +51,7 @@ const productsData = [
         fullDesc: 'Создан для больших открытых пространств. Низкий профиль не перекрывает вид из панорамных окон, а широкая оттоманка позволяет отдыхать полулежа.',
         materials: 'Березовая фанера, независимый пружинный блок, шенилл.',
         dimensions: 'Ширина: 320 см | Глубина оттоманки: 160 см',
-        images: [img3, img3_2], // 2 ракурса
+        images: [img3, img3_2],
     },
     {
         id: 4,
@@ -61,7 +61,7 @@ const productsData = [
         fullDesc: 'Благодаря скрытым опорам создается иллюзия левитации. Тонкие подлокотники экономят пространство, оставляя максимум места для сидения.',
         materials: 'Массив дуба, натуральный пух/перо, премиальная рогожка.',
         dimensions: 'Ширина: 220 см | Глубина: 95 см | Высота: 85 см',
-        images: [img4, img4_2, img4_3, img4_4, img4_5], // 5 ракурсов
+        images: [img4, img4_2, img4_3, img4_4, img4_5],
     },
     {
         id: 5,
@@ -71,7 +71,7 @@ const productsData = [
         fullDesc: 'Nova — это чистота формы. Отсутствие лишних деталей делает эту модель универсальной для современных интерьеров от лофта до сканди.',
         materials: 'Металлический каркас, пенополиуретан HR, ткань Шенилл.',
         dimensions: 'Ширина: 260 см | Глубина: 100 см | Высота: 78 см',
-        images: [img5, img5_2], // 2 ракурса
+        images: [img5, img5_2],
     }
 ];
 
@@ -83,8 +83,6 @@ export default function CatalogPage() {
     const [activeTab, setActiveTab] = useState(location.state?.category || 'Диваны');
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [touchStartX, setTouchStartX] = useState(null);
-
-    // Стейт для текущей картинки в галерее
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
@@ -101,22 +99,24 @@ export default function CatalogPage() {
         if (incomingCategory && incomingCategory !== activeTab) {
             setActiveTab(incomingCategory);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.state?.category]);
+    }, [location.state?.category, activeTab]);
 
-    const nextImage = (e) => {
+    // ИЗМЕНЕНО: useCallback для функций слайдера
+    const nextImage = useCallback((e) => {
         e.stopPropagation();
+        if (!selectedProduct) return;
         setCurrentImageIndex((prev) =>
             prev === selectedProduct.images.length - 1 ? 0 : prev + 1
         );
-    };
+    }, [selectedProduct]);
 
-    const prevImage = (e) => {
+    const prevImage = useCallback((e) => {
         e.stopPropagation();
+        if (!selectedProduct) return;
         setCurrentImageIndex((prev) =>
             prev === 0 ? selectedProduct.images.length - 1 : prev - 1
         );
-    };
+    }, [selectedProduct]);
 
     const handleTouchStart = (e) => setTouchStartX(e.targetTouches[0].clientX);
     const handleTouchEnd = (e) => {
@@ -137,9 +137,12 @@ export default function CatalogPage() {
         setTouchStartX(null);
     };
 
-    const filteredProducts = activeTab === 'Все'
-        ? productsData
-        : productsData.filter(item => item.category === activeTab);
+    // ИЗМЕНЕНО: useMemo для предотвращения лишних рендеров
+    const filteredProducts = useMemo(() => {
+        return activeTab === 'Все'
+            ? productsData
+            : productsData.filter(item => item.category === activeTab);
+    }, [activeTab]);
 
     return (
         <section
@@ -177,7 +180,6 @@ export default function CatalogPage() {
                 </div>
             </FadeInUp>
 
-            {/* СЕТКА ТОВАРОВ */}
             <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <AnimatePresence mode="popLayout">
                     {filteredProducts.map((product) => (
@@ -206,7 +208,6 @@ export default function CatalogPage() {
                 </AnimatePresence>
             </motion.div>
 
-            {/* МОДАЛЬНОЕ ОКНО ТОВАРА СО СЛАЙДЕРОМ */}
             <AnimatePresence>
                 {selectedProduct && (
                     <>
@@ -231,6 +232,8 @@ export default function CatalogPage() {
                                     setSelectedProduct(null);
                                 }
                             }}
+                            // ИЗМЕНЕНО: Аппаратное ускорение для модалки, чтобы не лагала при свайпе
+                            style={{ willChange: "transform" }}
                             className="fixed bottom-0 left-0 w-full h-[85vh] md:h-[75vh] bg-primary z-50 shadow-2xl flex flex-col md:flex-row overflow-hidden"
                         >
                             <div className="md:hidden absolute top-3 left-1/2 -translate-x-1/2 w-12 h-[2px] bg-white/80 z-50 mix-blend-difference cursor-grab active:cursor-grabbing"></div>
@@ -242,7 +245,6 @@ export default function CatalogPage() {
                                 Закрыть [X]
                             </button>
 
-                            {/* БЛОК СЛАЙДЕРА */}
                             <div className="relative w-full h-[40vh] md:h-full md:w-1/2 shrink-0 bg-gray-200 group">
                                 <AnimatePresence mode="wait">
                                     <motion.img
@@ -257,7 +259,6 @@ export default function CatalogPage() {
                                     />
                                 </AnimatePresence>
 
-                                {/* Управление слайдером (показываем, если картинок больше одной) */}
                                 {selectedProduct.images.length > 1 && (
                                     <>
                                         <button

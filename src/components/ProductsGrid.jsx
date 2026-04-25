@@ -7,7 +7,6 @@ import img1 from '../assets/1.jpg';
 import img2 from '../assets/2.jpg';
 import img3 from '../assets/3.jpg';
 import img4 from '../assets/4.jpg';
-import img5 from '../assets/5.jpg';
 
 // Обновленные данные (с массивом images)
 const products = [
@@ -59,11 +58,12 @@ export default function ProductsGrid() {
                     <FadeInUp key={product.id} delay={index * 0.15}>
                         <div className="group flex flex-col h-full cursor-pointer min-w-[85vw] sm:min-w-[45vw] md:min-w-0 snap-center shrink-0">
                             <div className="relative w-full aspect-[4/5] overflow-hidden mb-6 bg-gray-100">
-                                {/* ИЗМЕНЕНО: Берем 0 индекс массива */}
+                                {/* ИЗМЕНЕНО: Оптимизация LCP и CLS */}
                                 <img
                                     src={product.images[0]}
                                     alt={product.name}
-                                    loading="lazy"
+                                    loading={index < 2 ? "eager" : "lazy"}
+                                    decoding="async"
                                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                 />
                             </div>
