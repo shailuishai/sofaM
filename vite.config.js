@@ -4,24 +4,21 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: {
-    target: 'esnext', // современные браузеры (меньше полифиллов)
-    minify: 'esbuild', // быстрый минификатор
-    cssMinify: true,
+    // Современные браузеры для меньшего веса бандла
+    target: 'esnext',
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Отделяем Framer Motion в отдельный чанк, он тяжелый
+            // Выносим тяжелый Framer Motion в отдельный файл
             if (id.includes('framer-motion')) {
               return 'framer-motion';
             }
+            // Выносим React и остальные зависимости в отдельный файл
             return 'vendor';
           }
         }
       }
     }
-  },
-  esbuild: {
-    drop: ['console', 'debugger'], // Удаляем логи на проде
   }
 })
