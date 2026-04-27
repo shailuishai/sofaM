@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import FadeInUp from '../components/ui/FadeInUp';
 import SEO from "../components/SEO.jsx";
 
-// Выносим контакты в конфигурацию (DRY)
 const CONTACT_LINKS = [
     { label: 'Телефон / Мессенджеры', value: '+375 29 330-20-00', href: 'tel:+375293302000' },
     { label: 'Telegram', value: 'Написать', href: 'https://t.me/PavelShyker' },
@@ -13,7 +12,6 @@ const CONTACT_LINKS = [
 export default function AboutPage() {
     const { hash } = useLocation();
 
-    // Надежный скролл к якорю через requestAnimationFrame (без setTimeout-хаков)
     useEffect(() => {
         if (hash) {
             requestAnimationFrame(() => {
@@ -28,16 +26,14 @@ export default function AboutPage() {
 
     return (
         <div className="w-full min-h-screen bg-primary pt-32 pb-16">
-            <SEO
-                title="О производстве | Sofa M"
-                description="Узнайте, как мы создаем архитектуру вашего личного пространства. Ручной труд мастеров, премиальные материалы и бескомпромиссное качество."
-            />
+            <SEO title="О производстве | Sofa M" />
 
             <section className="px-4 md:px-[120px] mb-16 md:mb-24">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
 
-                    <div className="lg:col-span-5">
-                        <FadeInUp>
+                    <div className="lg:col-span-5 w-full">
+                        {/* Защита от растяжения текста */}
+                        <FadeInUp className="w-full">
                             <span className="font-sans text-[12px] uppercase tracking-widest text-graphite/60 mb-6 block">
                                 Манифест
                             </span>
@@ -47,8 +43,8 @@ export default function AboutPage() {
                         </FadeInUp>
                     </div>
 
-                    <div className="lg:col-span-6 lg:col-start-7 lg:mt-12">
-                        <FadeInUp delay={0.2}>
+                    <div className="lg:col-span-6 lg:col-start-7 lg:mt-12 w-full">
+                        <FadeInUp delay={0.2} className="w-full">
                             <p className="font-sans text-[16px] md:text-[18px] leading-[160%] text-graphite/80 font-light mb-8">
                                 Мы не просто производим мебель. Мы создаем архитектуру вашего личного пространства.
                                 Отказ от компромиссов в качестве материалов и строгий минимализм в дизайне
@@ -62,24 +58,26 @@ export default function AboutPage() {
                     </div>
                 </div>
 
-                {/* Строгий контейнер с фоном, картинка абсолютно спозиционирована (нет Layout Shifts) */}
-                <FadeInUp delay={0.4} className="relative block mt-12 md:mt-20 w-full h-[300px] md:h-[50vh] overflow-hidden bg-gray-200 rounded-sm">
-                    <img
-                        src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop"
-                        alt="Интерьер и мебель производства Sofa M"
-                        loading="lazy"
-                        decoding="async"
-                        className="absolute inset-0 w-full h-full object-cover grayscale-[10%]"
-                    />
-                </FadeInUp>
+                {/* ИЗМЕНЕНО: Строгий внешний контейнер для изображения */}
+                <div className="relative mt-12 md:mt-20 w-full h-[300px] md:h-[50vh] bg-gray-200 rounded-sm">
+                    {/* Анимация не ломает верстку, а просто следует размерам родителя */}
+                    <FadeInUp delay={0.4} className="w-full h-full overflow-hidden rounded-sm">
+                        <img
+                            src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop"
+                            alt="Интерьер и мебель производства Sofa M"
+                            loading="lazy"
+                            decoding="async"
+                            className="absolute inset-0 w-full h-full object-cover grayscale-[10%]"
+                        />
+                    </FadeInUp>
+                </div>
             </section>
 
-            {/* Блок контактов */}
             <section id="contacts" className="px-4 md:px-[120px] scroll-mt-32">
-                <FadeInUp>
+                <FadeInUp className="w-full">
                     <div className="bg-graphite text-[#F9F9F7] p-8 md:p-24 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center rounded-sm">
 
-                        <div>
+                        <div className="w-full">
                             <span className="font-sans text-[12px] uppercase tracking-widest text-gray-400 mb-4 block">
                                 Контакты
                             </span>
@@ -108,7 +106,7 @@ export default function AboutPage() {
                             </div>
                         </div>
 
-                        <div className="flex flex-col justify-center items-start md:items-end">
+                        <div className="flex flex-col justify-center items-start md:items-end w-full">
                             <p className="font-sans text-sm text-gray-400 font-light max-w-sm mb-8 md:text-right leading-relaxed">
                                 Напишите нам, и мы с удовольствием ответим на все вопросы, поможем подобрать идеальную конфигурацию и рассчитаем стоимость по вашим размерам.
                             </p>
