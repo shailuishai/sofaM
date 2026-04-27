@@ -98,11 +98,13 @@ export default function CatalogPage() {
                 <AnimatePresence mode="sync">
                     {filteredProducts.map((product) => (
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.98 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
+                            // БЫЛО: initial={{ opacity: 0, scale: 0.98 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            // БЫЛО: animate={{ opacity: 1, scale: 1 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 20 }}
                             transition={{ duration: 0.3 }}
-                            style={{ willChange: "opacity, transform" }}
+                            // БЫЛО: style={{ willChange: "opacity, transform" }} <- УДАЛЕНО!
                             key={product.id}
                             className="group flex flex-col h-full cursor-pointer relative z-10"
                             onClick={() => setSelectedProduct(product)}
@@ -113,10 +115,8 @@ export default function CatalogPage() {
                                     alt={product.name}
                                     decoding="async"
                                     loading="lazy"
-                                    // ИЗМЕНЕНО: scale только на десктопе (md:group-hover:scale-105)
-                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-105 will-change-transform"
+                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-105"
                                 />
-                                {/* ИЗМЕНЕНО: затемнение тоже только на десктопе */}
                                 <div className="absolute inset-0 bg-black/0 md:group-hover:bg-black/10 transition-colors duration-300 z-10" />
                             </div>
                             <h3 className="font-serif text-[20px] text-graphite mb-2">{product.name}</h3>

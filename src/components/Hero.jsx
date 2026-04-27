@@ -18,7 +18,7 @@ export default function Hero() {
                     fetchPriority="high"
                     loading="eager"
                     decoding="sync"
-                    className="absolute inset-0 w-full h-full object-cover object-center opacity-70 will-change-[opacity]"
+                    className="absolute inset-0 w-full h-full object-cover object-center opacity-70"
                 />
                 {/* Оверлей градиента вырван из потока */}
                 <div className="absolute inset-0 bg-gradient-to-b from-primary/40 to-transparent" />
@@ -28,10 +28,7 @@ export default function Hero() {
             <div className="relative z-10 flex flex-col items-center text-center px-4 lg:px-[120px] w-full max-w-[1440px] mx-auto mt-16">
                 <h1 className="sr-only">Премиальная мягкая мебель на заказ в Минске</h1>
 
-                <h2
-                    className="font-serif text-[40px] md:text-[72px] leading-[110%] text-graphite mb-6 max-w-4xl"
-                    style={{ willChange: "transform, opacity" }}
-                >
+                <h2 className="font-serif text-[40px] md:text-[72px] leading-[110%] text-graphite mb-6 max-w-4xl">
                     Архитектура вашего комфорта
                 </h2>
 
