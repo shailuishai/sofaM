@@ -6,7 +6,6 @@ import SEO from "../components/SEO.jsx";
 export default function AboutPage() {
     const { hash } = useLocation();
 
-    // Магия для плавного скролла к блоку контактов
     useEffect(() => {
         if (hash) {
             setTimeout(() => {
@@ -26,7 +25,6 @@ export default function AboutPage() {
                 description="Узнайте, как мы создаем архитектуру вашего личного пространства. Ручной труд мастеров, премиальные материалы и бескомпромиссное качество."
             />
 
-            {/* ПРАВКА: Уменьшили чрезмерный отступ снизу mb-24 -> mb-16 */}
             <section className="px-4 md:px-[120px] mb-16 md:mb-24">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
 
@@ -56,24 +54,23 @@ export default function AboutPage() {
                     </div>
                 </div>
 
-                {/* ПРАВКА: Реалистичное фото + уменьшили высоту на десктопе (h-[50vh]) */}
-                <div className="mt-12 md:mt-20 w-full h-[300px] md:h-[50vh] overflow-hidden">
+                {/* ИЗМЕНЕНО: Добавлено relative block и bg-gray-200, картинка absolute */}
+                <div className="relative block mt-12 md:mt-20 w-full h-[300px] md:h-[50vh] overflow-hidden bg-gray-200">
                     <FadeInUp delay={0.4}>
                         <img
                             src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop"
                             alt="Интерьер и мебель"
-                            className="w-full h-full object-cover grayscale-[10%]"
+                            loading="lazy"
+                            decoding="async"
+                            className="absolute inset-0 w-full h-full object-cover grayscale-[10%]"
                         />
                     </FadeInUp>
                 </div>
             </section>
 
-            {/* СКРОЛЛ 2: Блок Контактов */}
             <section id="contacts" className="px-4 md:px-[120px] scroll-mt-32">
                 <FadeInUp>
                     <div className="bg-[#1A1A1A] text-[#F9F9F7] p-8 md:p-24 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-
-                        {/* ПРАВКА: Менее пафосные тексты */}
                         <div>
                             <span className="font-sans text-[12px] uppercase tracking-widest text-gray-400 mb-4 block">
                                 Контакты
@@ -94,18 +91,15 @@ export default function AboutPage() {
 
                                 <div>
                                     <p className="text-gray-500 uppercase text-xs tracking-widest mb-1">Адрес</p>
-                                    {/* ПРАВКА: Минский адрес */}
                                     <p>Минск, ул. Архитектурная, 1</p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Кнопка связи */}
                         <div className="flex flex-col justify-center items-start md:items-end">
                             <p className="font-sans text-sm text-gray-400 font-light max-w-sm mb-8 md:text-right leading-relaxed">
                                 Напишите нам, и мы с удовольствием ответим на все вопросы, поможем подобрать идеальную конфигурацию и рассчитаем стоимость по вашим размерам.
                             </p>
-                            {/* ПРАВКА: Кнопка на всю ширину на мобилках */}
                             <a
                                 href="https://t.me/PavelShyker"
                                 target="_blank"
@@ -115,7 +109,6 @@ export default function AboutPage() {
                                 Написать в Telegram
                             </a>
                         </div>
-
                     </div>
                 </FadeInUp>
             </section>
