@@ -7,41 +7,41 @@ export default function Craftsmanship() {
         <section className="w-full px-0 md:px-[120px] py-16 md:py-[120px] bg-primary">
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
 
-                {/* ИЗМЕНЕНО: Жесткий блок с фоном, картинка absolute */}
-                <div className="lg:col-span-7 relative block w-full h-[450px] md:h-[600px] overflow-hidden bg-gray-200">
-                    <FadeInUp>
+                {/* Жесткий блок с фоном, защищен от CLS. Картинка вырвана из потока */}
+                <div className="lg:col-span-7 relative block w-full h-[450px] md:h-[600px] overflow-hidden bg-gray-200 rounded-sm">
+                    <FadeInUp className="w-full h-full">
                         <img
                             src="https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?q=80&w=1200&auto=format&fit=crop"
-                            alt="Процесс создания мебели"
+                            alt="Процесс создания премиальной мебели"
                             loading="lazy"
                             decoding="async"
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105 will-change-transform"
                         />
                     </FadeInUp>
                 </div>
 
                 <div className="relative z-10 lg:col-span-4 lg:col-start-9 flex flex-col items-start w-[90%] md:w-full mx-auto -mt-24 md:mt-0 bg-primary md:bg-transparent p-8 md:p-0 border border-gray-200 md:border-none">
 
-                    <FadeInUp delay={0.2}>
+                    <FadeInUp delay={0.1}>
                         <span className="font-sans text-[12px] uppercase tracking-widest text-graphite/60 mb-4 block">
                             О производстве
                         </span>
                     </FadeInUp>
 
-                    <FadeInUp delay={0.3}>
+                    <FadeInUp delay={0.2}>
                         <h2 className="font-serif text-[28px] md:text-[48px] leading-[120%] text-graphite mb-6">
                             Бескомпромиссное мастерство
                         </h2>
                     </FadeInUp>
 
-                    <FadeInUp delay={0.4}>
+                    <FadeInUp delay={0.3}>
                         <p className="font-sans text-[16px] leading-[160%] text-graphite/80 font-light mb-10">
                             Каждый предмет мебели создается вручную с использованием премиальных материалов.
                             Мы не идем на компромиссы в качестве: от каркаса из массива дерева до идеальных швов на итальянской ткани.
                         </p>
                     </FadeInUp>
 
-                    <FadeInUp delay={0.5}>
+                    <FadeInUp delay={0.4}>
                         <Button
                             variant="secondary"
                             to="/about#contacts"
@@ -57,7 +57,6 @@ export default function Craftsmanship() {
                     </FadeInUp>
 
                 </div>
-
             </div>
         </section>
     );

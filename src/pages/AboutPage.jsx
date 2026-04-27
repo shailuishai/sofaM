@@ -3,18 +3,26 @@ import { useLocation } from 'react-router-dom';
 import FadeInUp from '../components/ui/FadeInUp';
 import SEO from "../components/SEO.jsx";
 
+// Выносим контакты в конфигурацию (DRY)
+const CONTACT_LINKS = [
+    { label: 'Телефон / Мессенджеры', value: '+375 29 330-20-00', href: 'tel:+375293302000' },
+    { label: 'Telegram', value: 'Написать', href: 'https://t.me/PavelShyker' },
+    { label: 'Instagram', value: 'Смотреть профиль', href: 'https://www.instagram.com/sofa_m.by' }
+];
+
 export default function AboutPage() {
     const { hash } = useLocation();
 
+    // Надежный скролл к якорю через requestAnimationFrame (без setTimeout-хаков)
     useEffect(() => {
         if (hash) {
-            setTimeout(() => {
+            requestAnimationFrame(() => {
                 const id = hash.replace('#', '');
                 const element = document.getElementById(id);
                 if (element) {
                     element.scrollIntoView({ behavior: 'smooth' });
                 }
-            }, 150);
+            });
         }
     }, [hash]);
 
@@ -54,23 +62,23 @@ export default function AboutPage() {
                     </div>
                 </div>
 
-                {/* ИЗМЕНЕНО: Добавлено relative block и bg-gray-200, картинка absolute */}
-                <div className="relative block mt-12 md:mt-20 w-full h-[300px] md:h-[50vh] overflow-hidden bg-gray-200">
-                    <FadeInUp delay={0.4}>
-                        <img
-                            src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop"
-                            alt="Интерьер и мебель"
-                            loading="lazy"
-                            decoding="async"
-                            className="absolute inset-0 w-full h-full object-cover grayscale-[10%]"
-                        />
-                    </FadeInUp>
-                </div>
+                {/* Строгий контейнер с фоном, картинка абсолютно спозиционирована (нет Layout Shifts) */}
+                <FadeInUp delay={0.4} className="relative block mt-12 md:mt-20 w-full h-[300px] md:h-[50vh] overflow-hidden bg-gray-200 rounded-sm">
+                    <img
+                        src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop"
+                        alt="Интерьер и мебель производства Sofa M"
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover grayscale-[10%]"
+                    />
+                </FadeInUp>
             </section>
 
+            {/* Блок контактов */}
             <section id="contacts" className="px-4 md:px-[120px] scroll-mt-32">
                 <FadeInUp>
-                    <div className="bg-[#1A1A1A] text-[#F9F9F7] p-8 md:p-24 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+                    <div className="bg-graphite text-[#F9F9F7] p-8 md:p-24 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center rounded-sm">
+
                         <div>
                             <span className="font-sans text-[12px] uppercase tracking-widest text-gray-400 mb-4 block">
                                 Контакты
@@ -80,17 +88,21 @@ export default function AboutPage() {
                             </h2>
 
                             <div className="flex flex-col gap-6 font-sans text-[15px] font-light">
-                                <div>
-                                    <p className="text-gray-500 uppercase text-xs tracking-widest mb-1">Телефон / Мессенджеры</p>
-                                    <a href="tel:+375293302000" className="hover:text-gray-300 transition-colors block mb-2">+375 29 330-20-00</a>
-                                    <div className="flex gap-4">
-                                        <a href="https://t.me/PavelShyker" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-gray-300">Telegram</a>
-                                        <a href="https://www.instagram.com/sofa_m.by" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-gray-300">Instagram</a>
-                                    </div>
+                                <div className="flex flex-col gap-3">
+                                    {CONTACT_LINKS.map((link) => (
+                                        <div key={link.label} className="flex gap-4 items-center">
+                                            <span className="text-gray-500 uppercase text-xs tracking-widest w-24">
+                                                {link.label.split(' ')[0]}
+                                            </span>
+                                            <a href={link.href} target={link.href.startsWith('http') ? '_blank' : '_self'} rel="noreferrer" className="hover:text-gray-300 transition-colors underline underline-offset-4">
+                                                {link.value}
+                                            </a>
+                                        </div>
+                                    ))}
                                 </div>
 
-                                <div>
-                                    <p className="text-gray-500 uppercase text-xs tracking-widest mb-1">Адрес</p>
+                                <div className="mt-4 pt-4 border-t border-gray-800">
+                                    <p className="text-gray-500 uppercase text-xs tracking-widest mb-2">Адрес шоурума</p>
                                     <p>Минск, ул. Архитектурная, 1</p>
                                 </div>
                             </div>
@@ -104,11 +116,12 @@ export default function AboutPage() {
                                 href="https://t.me/PavelShyker"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="w-full sm:w-auto text-center font-sans font-medium uppercase tracking-widest text-[14px] bg-[#F9F9F7] text-[#1A1A1A] py-4 px-10 hover:bg-gray-200 transition-colors"
+                                className="w-full sm:w-auto text-center font-sans font-medium uppercase tracking-widest text-[14px] bg-[#F9F9F7] text-graphite py-4 px-10 hover:bg-gray-200 transition-colors"
                             >
                                 Написать в Telegram
                             </a>
                         </div>
+
                     </div>
                 </FadeInUp>
             </section>
