@@ -17,8 +17,8 @@ const products = [
 const ProductCard = memo(({ product, index, pathname }) => (
     <FadeInUp
         delay={index * 0.15}
-        // ИЗМЕНЕНО: Классы для мобильного скролла перенесены на родительский компонент анимации
-        className="group flex flex-col h-full cursor-pointer min-w-[85vw] sm:min-w-[45vw] md:min-w-0 snap-center shrink-0"
+        // ИЗМЕНЕНО: Добавлен flex-none. Теперь карточка не сжимается на мобилке, что позволяет свайпать!
+        className="group flex flex-col h-full cursor-pointer flex-none w-[85vw] sm:w-[50vw] md:w-auto snap-center"
     >
         <div className="relative w-full pt-[125%] overflow-hidden mb-6 bg-gray-200 block rounded-sm">
             <img
@@ -26,8 +26,8 @@ const ProductCard = memo(({ product, index, pathname }) => (
                 alt={product.name}
                 loading={index < 2 ? "eager" : "lazy"}
                 decoding="async"
-                // ИЗМЕНЕНО: md:group-hover:scale-105 делает анимацию только на десктопе
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-105 will-change-transform"
+                // ИЗМЕНЕНО: lg:group-hover работает только на ПК (мышка). На мобилках картинка статична.
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out lg:group-hover:scale-105 will-change-transform"
             />
         </div>
 
@@ -49,8 +49,8 @@ const ProductCard = memo(({ product, index, pathname }) => (
                 className="relative w-max text-[13px] font-sans font-medium uppercase tracking-widest text-graphite border-b border-graphite pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors"
             >
                 Узнать стоимость
-                {/* ИЗМЕНЕНО: Полоска под кнопкой тоже анимируется только на ПК */}
-                <span className="absolute bottom-0 left-0 w-full h-[1px] bg-graphite origin-left scale-x-0 transition-transform duration-300 ease-out md:group-hover:scale-x-100" />
+                {/* Линия подчеркивания тоже анимируется только на ПК */}
+                <span className="absolute bottom-0 left-0 w-full h-[1px] bg-graphite origin-left scale-x-0 transition-transform duration-300 ease-out lg:group-hover:scale-x-100" />
             </Link>
         </div>
     </FadeInUp>
@@ -64,28 +64,28 @@ export default function ProductsGrid() {
     return (
         <section className="w-full px-4 md:px-[120px] py-16 md:py-[120px] bg-primary overflow-hidden">
             <FadeInUp>
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 gap-6">
-                    <div>
-                        <span className="font-sans text-[12px] uppercase tracking-widest text-graphite/60 mb-2 block">
-                            Коллекция
-                        </span>
-                        <h2 className="font-serif text-[28px] md:text-[48px] leading-[120%] text-graphite">
-                            Популярные модели
-                        </h2>
-                    </div>
+                <div className="flex flex-col justify-between items-start mb-10 md:mb-16 gap-2">
+                    <span className="font-sans text-[12px] uppercase tracking-widest text-graphite/60 block">
+                        Коллекция
+                    </span>
+                    <h2 className="font-serif text-[28px] md:text-[48px] leading-[120%] text-graphite">
+                        Популярные модели
+                    </h2>
                 </div>
             </FadeInUp>
 
-            {/* ИЗМЕНЕНО: Сетка правильно настроена для горизонтального листания пальцем на мобилках */}
-            <div className="flex md:grid overflow-x-auto md:overflow-visible hide-scrollbar snap-x snap-mandatory md:snap-none touch-pan-y overscroll-x-contain grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 -mx-4 px-4 md:mx-0 md:px-0 pb-4 md:pb-0">
-                {products.map((product, index) => (
-                    <ProductCard
-                        key={product.id}
-                        product={product}
-                        index={index}
-                        pathname={pathname}
-                    />
-                ))}
+            {/* ИЗМЕНЕНО: Внешняя обертка для отступов, внутренний блок только для скролла */}
+            <div className="-mx-4 px-4 md:mx-0 md:px-0">
+                <div className="flex md:grid overflow-x-auto overflow-y-hidden md:overflow-visible hide-scrollbar snap-x snap-mandatory md:snap-none md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 pb-4 md:pb-0">
+                    {products.map((product, index) => (
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                            index={index}
+                            pathname={pathname}
+                        />
+                    ))}
+                </div>
             </div>
         </section>
     );
