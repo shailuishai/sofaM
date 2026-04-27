@@ -1,26 +1,25 @@
 import React from 'react';
 import Button from './ui/Button';
 import FadeInUp from './ui/FadeInUp';
-import {Link} from "react-router-dom"; // Проверь путь
 
 export default function Craftsmanship() {
     return (
         <section className="w-full px-0 md:px-[120px] py-16 md:py-[120px] bg-primary">
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
 
-                {/* Левая часть: Изображение появляется сразу */}
-                <div className="lg:col-span-7 relative w-full h-[450px] md:h-[600px] overflow-hidden">
+                {/* ИЗМЕНЕНО: Жесткий блок с фоном, картинка absolute */}
+                <div className="lg:col-span-7 relative block w-full h-[450px] md:h-[600px] overflow-hidden bg-gray-200">
                     <FadeInUp>
                         <img
                             src="https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?q=80&w=1200&auto=format&fit=crop"
                             alt="Процесс создания мебели"
                             loading="lazy"
-                            className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
+                            decoding="async"
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
                         />
                     </FadeInUp>
                 </div>
 
-                {/* Правая часть: Текст анимируется построчно */}
                 <div className="relative z-10 lg:col-span-4 lg:col-start-9 flex flex-col items-start w-[90%] md:w-full mx-auto -mt-24 md:mt-0 bg-primary md:bg-transparent p-8 md:p-0 border border-gray-200 md:border-none">
 
                     <FadeInUp delay={0.2}>
@@ -47,7 +46,6 @@ export default function Craftsmanship() {
                             variant="secondary"
                             to="/about#contacts"
                             onClick={(e) => {
-                                // Если мы уже на странице /about, отменяем переход и просто скроллим
                                 if (window.location.pathname === '/about') {
                                     e.preventDefault();
                                     document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' });

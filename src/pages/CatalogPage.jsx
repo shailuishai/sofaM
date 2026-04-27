@@ -135,8 +135,8 @@ export default function CatalogPage() {
                             className="group flex flex-col h-full cursor-pointer relative z-10"
                             onClick={() => setSelectedProduct(product)}
                         >
-                            {/* ИЗМЕНЕНО: Жесткий контейнер aspect-[4/5] и absolute картинка. Никаких скачков. */}
-                            <div className="relative w-full aspect-[4/5] overflow-hidden mb-6 bg-gray-200 block">
+                            {/* ИЗМЕНЕНО: Заменили aspect-[4/5] на pt-[125%] для Webview */}
+                            <div className="relative w-full pt-[125%] overflow-hidden mb-6 bg-gray-200 block">
                                 <img
                                     src={product.images[0]}
                                     alt={product.name}
