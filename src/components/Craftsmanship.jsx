@@ -7,23 +7,18 @@ export default function Craftsmanship() {
         <section className="w-full px-0 md:px-[120px] py-16 md:py-[120px] bg-primary">
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
 
-                {/* Внешний Grid-контейнер держит пропорции */}
-                <div className="lg:col-span-7 relative w-full h-[450px] md:h-[600px] bg-gray-200 rounded-sm">
-                    {/* Анимация жестко вписана в размеры родителя */}
-                    <FadeInUp className="w-full h-full overflow-hidden rounded-sm">
-                        <img
-                            src="https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?q=80&w=1200&auto=format&fit=crop"
-                            alt="Процесс создания премиальной мебели"
-                            loading="lazy"
-                            decoding="async"
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 md:hover:scale-105"
-                        />
-                    </FadeInUp>
-                </div>
+                {/* ИЗМЕНЕНО: FadeInUp стал родительским контейнером */}
+                <FadeInUp className="lg:col-span-7 relative w-full h-[450px] md:h-[600px] bg-gray-200 rounded-sm overflow-hidden">
+                    <img
+                        src="https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?q=80&w=1200&auto=format&fit=crop"
+                        alt="Процесс создания премиальной мебели"
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 md:hover:scale-105"
+                    />
+                </FadeInUp>
 
                 <div className="relative z-10 lg:col-span-4 lg:col-start-9 flex flex-col items-start w-[90%] md:w-full mx-auto -mt-24 md:mt-0 bg-primary md:bg-transparent p-8 md:p-0 border border-gray-200 md:border-none">
-
-                    {/* Добавлены className="w-full" ко всем текстовым блокам, чтобы Flexbox не растягивал их */}
                     <FadeInUp delay={0.1} className="w-full">
                         <span className="font-sans text-[12px] uppercase tracking-widest text-graphite/60 mb-4 block">
                             О производстве
@@ -57,7 +52,6 @@ export default function Craftsmanship() {
                             Узнать больше
                         </Button>
                     </FadeInUp>
-
                 </div>
             </div>
         </section>

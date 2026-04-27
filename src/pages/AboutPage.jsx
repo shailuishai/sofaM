@@ -58,19 +58,18 @@ export default function AboutPage() {
                     </div>
                 </div>
 
-                {/* ИЗМЕНЕНО: Строгий внешний контейнер для изображения */}
-                <div className="relative mt-12 md:mt-20 w-full h-[300px] md:h-[50vh] bg-gray-200 rounded-sm">
-                    {/* Анимация не ломает верстку, а просто следует размерам родителя */}
-                    <FadeInUp delay={0.4} className="w-full h-full overflow-hidden rounded-sm">
-                        <img
-                            src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop"
-                            alt="Интерьер и мебель производства Sofa M"
-                            loading="lazy"
-                            decoding="async"
-                            className="absolute inset-0 w-full h-full object-cover grayscale-[10%]"
-                        />
-                    </FadeInUp>
-                </div>
+                <FadeInUp
+                    delay={0.4}
+                    className="relative mt-12 md:mt-20 w-full h-[300px] md:h-[50vh] bg-gray-200 rounded-sm overflow-hidden"
+                >
+                    <img
+                        src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop"
+                        alt="Интерьер и мебель производства Sofa M"
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover grayscale-[10%]"
+                    />
+                </FadeInUp>
             </section>
 
             <section id="contacts" className="px-4 md:px-[120px] scroll-mt-32">
