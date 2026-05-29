@@ -17,8 +17,10 @@ const products = [
 const ProductCard = memo(({ product, index, pathname }) => (
     <FadeInUp
         delay={index * 0.15}
-        // ИЗМЕНЕНО: Добавлен flex-none. Теперь карточка не сжимается на мобилке, что позволяет свайпать!
-        className="group flex flex-col h-full cursor-pointer flex-none w-[85vw] sm:w-[50vw] md:w-auto snap-center"
+        // ИЗМЕНЕНИЯ ЗДЕСЬ:
+        // 1. Изменил w-[85vw] на w-[75vw] (или w-[80vw]), чтобы следующая карточка точно влезла в экран.
+        // 2. Изменил snap-center на snap-start, чтобы карточка прилипала к левому краю.
+        className="group flex flex-col h-full cursor-pointer flex-none w-[75vw] sm:w-[50vw] md:w-auto snap-start"
     >
         <div className="relative w-full pt-[125%] overflow-hidden mb-6 bg-gray-200 block rounded-sm">
             <img
@@ -26,7 +28,6 @@ const ProductCard = memo(({ product, index, pathname }) => (
                 alt={product.name}
                 loading={index < 2 ? "eager" : "lazy"}
                 decoding="async"
-                // ИЗМЕНЕНО: lg:group-hover работает только на ПК (мышка). На мобилках картинка статична.
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out lg:group-hover:scale-105 will-change-transform"
             />
         </div>
@@ -49,7 +50,6 @@ const ProductCard = memo(({ product, index, pathname }) => (
                 className="relative w-max text-[13px] font-sans font-medium uppercase tracking-widest text-graphite border-b border-graphite pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors"
             >
                 Узнать стоимость
-                {/* Линия подчеркивания тоже анимируется только на ПК */}
                 <span className="absolute bottom-0 left-0 w-full h-[1px] bg-graphite origin-left scale-x-0 transition-transform duration-300 ease-out lg:group-hover:scale-x-100" />
             </Link>
         </div>
@@ -74,9 +74,10 @@ export default function ProductsGrid() {
                 </div>
             </FadeInUp>
 
-            {/* ИЗМЕНЕНО: Внешняя обертка для отступов, внутренний блок только для скролла */}
             <div className="-mx-4 px-4 md:mx-0 md:px-0">
-                <div className="flex md:grid overflow-x-auto overflow-y-hidden md:overflow-visible hide-scrollbar snap-x snap-mandatory md:snap-none md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 pb-4 md:pb-0">
+                {/* ИЗМЕНЕНИЯ ЗДЕСЬ: Добавлен scroll-pl-4 (scroll padding left),
+                    чтобы при свайпе карточка прилипала с учетом бокового отступа, а не впритык к экрану */}
+                <div className="flex md:grid overflow-x-auto overflow-y-hidden md:overflow-visible hide-scrollbar snap-x snap-mandatory md:snap-none md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 pb-4 md:pb-0 scroll-pl-4 md:scroll-pl-0 pr-4 md:pr-0">
                     {products.map((product, index) => (
                         <ProductCard
                             key={product.id}

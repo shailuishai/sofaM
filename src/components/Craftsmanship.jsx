@@ -37,21 +37,6 @@ export default function Craftsmanship() {
                             Мы не идем на компромиссы в качестве: от каркаса из массива дерева до идеальных швов на итальянской ткани.
                         </p>
                     </FadeInUp>
-
-                    <FadeInUp delay={0.4} className="w-full">
-                        <Button
-                            variant="secondary"
-                            to="/about#contacts"
-                            onClick={(e) => {
-                                if (window.location.pathname === '/about') {
-                                    e.preventDefault();
-                                    document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' });
-                                }
-                            }}
-                        >
-                            Узнать больше
-                        </Button>
-                    </FadeInUp>
                 </div>
             </div>
         </section>
